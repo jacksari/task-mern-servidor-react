@@ -21,9 +21,10 @@ exports.crearProyecto = async (req,res) => {
             proyecto
         })
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         res.status(500).json({
-            msg: 'hubo un error'
+            msg: 'hubo un error',
+            error
         })
     }
 }
@@ -36,8 +37,10 @@ exports.obtenerProyectos = async (req, res) =>{
         })
         
     } catch (error) {
+        // console.log(error);
         res.status(500).json({
-            msg: 'hubo un error'
+            msg: 'hubo un error',
+            error
         })
     }
 }
@@ -85,9 +88,10 @@ exports.actualizarProyecto = async (req,res) =>{
         })
 
     } catch (error) {
-        //console.log(error);
+        // console.log(error);
         res.status(500).json({
-            msg: 'hubo un error'
+            msg: 'hubo un error',
+            error
         })
     }
 }
@@ -119,9 +123,10 @@ exports.eliminarProyecto = (req,res) =>{
             })
         })
     } catch (error) {
-        //console.log(error);
+        // console.log(error);
         res.status(500).json({
-            msg: 'hubo un error'
+            msg: 'hubo un error',
+            error
         })
     }
 
