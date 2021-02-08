@@ -58,3 +58,49 @@ exports.crearUsuario = async ( req,res) => {
     }    
 }
 
+exports.login = async ( req,res) => {
+    // revisar si hay errores
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(400).json({
+            errores: errors.array()
+        })
+    }
+    // Extraer email y password
+    const { email, password } = req.body;
+
+    try {
+        // Revisar que sea un usuario registrado
+        let usuario = await Usuario.findOne({email})
+        if(!usuario){
+            return res.status(400).json({
+                msg: 'El usuario no existe'
+            })
+        }
+        // Si el email exite
+        const passCorrecto = await bcrypt.compareSync(password, usuario.password)
+        if(!passCorrecto){
+            return res.status(400).json({
+                msg: 'Datos incorrectos'
+            })
+        }
+        // Si todo es correcto
+        // Crear y firmar jwt
+        const payload = {
+            usuario: {
+                id: usuario.id,
+                nombre: usuario.nombre,
+                email: usuario.email,
+                img: usuario.img
+            }
+        }
+        token = await jwt.sign(payload, process.env.SECRETA,{expiresIn: '3h'})
+        res.status(200).json({
+            token
+        })
+
+
+    } catch (error) {
+        console.log(e);
+    }
+}
