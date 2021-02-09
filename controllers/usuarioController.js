@@ -101,6 +101,18 @@ exports.login = async ( req,res) => {
 
 
     } catch (error) {
-        console.log(e);
+        console.log(error);
+        res.status(400).send('Hubo un error')
+    }
+}
+
+exports.usuarioAutenticado = async(req,res) =>{
+    try {
+        const usuario = await Usuario.findById(req.usuario.id).select('-password')
+        res.json({usuario})
+        
+    } catch (error) {
+        console.log(error);
+        res.status(400).send('Hubo un error')
     }
 }
